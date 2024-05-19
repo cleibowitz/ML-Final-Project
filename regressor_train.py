@@ -23,6 +23,7 @@ from keras.models import Sequential
 from keras.layers import LSTM
 from keras.layers import Dense
 from keras.layers import Dropout
+from keras.layers import Bidirectional, BatchNormalization
 import joblib
 
 # initialize full dataset
@@ -64,7 +65,6 @@ regressor.add(Dense(units=1))
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
 regressor.fit(X_train, Y_train, epochs=10, batch_size=32)
 
-
-# save regressor
 regressor.save('lstm_GOOGL.h5')
+
 joblib.dump(scaler, 'scaler.pkl')
