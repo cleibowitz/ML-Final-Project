@@ -21,6 +21,7 @@ from keras.models import Sequential
 from keras.layers import LSTM
 from keras.layers import Dense
 from keras.layers import Dropout
+import joblib
 
 # initialize full dataset
 dataset_train = pd.read_csv("GOOGL.csv")
@@ -61,3 +62,6 @@ regressor.add(Dense(units=1))
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
 regressor.fit(X_train, Y_train, epochs=100, batch_size=32)
 
+regressor.save('lstm_GOOGL.h5')
+
+joblib.dump(scaler, 'scaler.pkl')
