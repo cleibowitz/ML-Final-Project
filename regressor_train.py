@@ -3,6 +3,8 @@ Chase Leibowitz & Jacob Ominsky
 ML IS 2023-24 Final Project
 
 Objective: Use LSTM network to predict stock prices using GOOGL stock data
+
+FILE: Train and save model
 """
 
 # import libraries
@@ -60,8 +62,9 @@ regressor.add(Dense(units=1))
 
 # fitting the moddle
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
-regressor.fit(X_train, Y_train, epochs=100, batch_size=32)
+regressor.fit(X_train, Y_train, epochs=10, batch_size=32)
 
+
+# save regressor
 regressor.save('lstm_GOOGL.h5')
-
 joblib.dump(scaler, 'scaler.pkl')
