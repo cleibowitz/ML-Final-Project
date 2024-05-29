@@ -9,3 +9,5 @@ Modify the program so models can be trained on any stock (using API)
 Incorporate training bot with predictor for next-day prices (give trading recommendations)
 Figure out GPU acceleration for AMD GPUs.
 Cloud hosting? Firebase? AWS?
+
+Jacob: if you're reading this, please go figure out GPU acceleration while I work on the API thing
