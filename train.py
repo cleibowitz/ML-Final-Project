@@ -11,6 +11,7 @@ FILE: Train and save model
 import os
 import numpy as np
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
 #%matplotlib inline
 from sklearn import preprocessing
@@ -25,6 +26,11 @@ from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import Bidirectional, BatchNormalization
 import joblib
+from keras.layers import Flatten
+from keras.optimizers import Adamax
+from keras.optimizers import Nadam
+from keras.callbacks import EarlyStopping
+
 
 # initialize full dataset
 dataset_train = pd.read_csv("GOOGL.csv")
@@ -53,17 +59,27 @@ regressor.add(Dropout(0.2))
 regressor.add(LSTM(units = 50, return_sequences=True))
 regressor.add(Dropout(0.2))
 
-regressor.add(LSTM(units=50, return_sequences=True))
+regressor.add(LSTM(units = 50, return_sequences=True))
 regressor.add(Dropout(0.2))
 
-regressor.add(LSTM(units=50))
+regressor.add(LSTM(units = 50, return_sequences=True))
 regressor.add(Dropout(0.2))
+regressor.add(Flatten())
+
+
+# Dense layers with dropout
+regressor.add(Dense(units=64, activation='relu'))
+regressor.add(Dropout(0.5))
+
+regressor.add(Dense(units=32, activation='relu'))
+regressor.add(Dropout(0.5))
 
 regressor.add(Dense(units=1))
 
-# fitting the moddle
-regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
-regressor.fit(X_train, Y_train, epochs=10, batch_size=32)
+# fitting the model
+
+regressor.compile(optimizer = Nadam(), loss = 'mean_squared_error')
+regressor.fit(X_train, Y_train, epochs=20, batch_size=64)
 
 regressor.save('lstm_GOOGL.h5')
 

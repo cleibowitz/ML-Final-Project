@@ -19,7 +19,7 @@ regressor = load_model('lstm_GOOGL.h5')
 scaler = joblib.load('scaler.pkl')
 
 # Load and preprocess the test data
-dataset_test = pd.read_csv('GOOGL_test.csv')
+dataset_test = pd.read_csv('GOOGL.csv')
 actual_stock_price = dataset_test.iloc[:, 1:2].values
 
 dataset_train = pd.read_csv("GOOGL.csv")
