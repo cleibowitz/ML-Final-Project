@@ -30,7 +30,8 @@ from keras.layers import Flatten
 from keras.optimizers import Adamax
 from keras.optimizers import Nadam
 from keras.callbacks import EarlyStopping
-
+from keras.callbacks import TensorBoard
+import datetime
 
 # initialize full dataset
 dataset_train = pd.read_csv("GOOGL.csv")
@@ -76,10 +77,15 @@ regressor.add(Dropout(0.5))
 
 regressor.add(Dense(units=1))
 
+
+# Directory where the logs will be stored
+log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1, write_graph=True)
+
 # fitting the model
 
 regressor.compile(optimizer = Nadam(), loss = 'mean_squared_error')
-regressor.fit(X_train, Y_train, epochs=20, batch_size=64)
+regressor.fit(X_train, Y_train, epochs=20, batch_size=64, callbacks=[tensorboard_callback])
 
 regressor.save('lstm_GOOGL.h5')
 
